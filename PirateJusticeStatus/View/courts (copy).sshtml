@@ -1,0 +1,7 @@
+﻿<table>
+@Each.Courts
+  <tr>
+    <td><a href="/court/@Current.Id">@Current.Name</a></td>
+  </tr>
+@EndEach
+</table>

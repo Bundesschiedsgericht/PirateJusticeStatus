@@ -1,0 +1,13 @@
+2018-10-21-19-08-56  Verbose  Sending message to stefan+lsg-nrw@savvy.ch
+2018-10-21-19-08-57  Verbose  Connected to mail server mail.piratenpartei.de:587
+2018-10-21-19-08-57  Info     Message sent to stefan+lsg-nrw@savvy.ch
+2018-10-21-19-08-57  Warning  Requested from LSG NRW at level 0
+2018-10-21-19-08-57  Verbose  Sending message to stefan.thoeni@piratenpartei.de
+2018-10-21-19-08-57  Verbose  Connected to mail server mail.piratenpartei.de:587
+2018-10-21-19-08-57  Info     Message sent to stefan.thoeni@piratenpartei.de
+2018-10-21-19-09-30  Notice   Court key login for LSG NRW
+2018-10-21-19-09-39  Notice   Update of  by LSG NRW
+2018-10-21-19-09-39  Verbose  Sending message to stefan.thoeni@piratenpartei.de
+2018-10-21-19-09-39  Verbose  Connected to mail server mail.piratenpartei.de:587
+2018-10-21-19-09-39  Info     Message sent to stefan.thoeni@piratenpartei.de
+2018-10-21-19-10-02  Notice   Admin logged in

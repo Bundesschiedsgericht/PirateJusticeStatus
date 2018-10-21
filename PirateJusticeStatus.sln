@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PirateJusticeStatus", "PirateJusticeStatus\PirateJusticeStatus.csproj", "{F20EE360-90D0-4CDC-9124-756B6D2D9950}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F20EE360-90D0-4CDC-9124-756B6D2D9950}.Debug|x86.ActiveCfg = Debug|x86
+		{F20EE360-90D0-4CDC-9124-756B6D2D9950}.Debug|x86.Build.0 = Debug|x86
+		{F20EE360-90D0-4CDC-9124-756B6D2D9950}.Release|x86.ActiveCfg = Release|x86
+		{F20EE360-90D0-4CDC-9124-756B6D2D9950}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal

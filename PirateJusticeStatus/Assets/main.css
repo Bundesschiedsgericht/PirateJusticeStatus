@@ -1,0 +1,38 @@
+﻿html,
+body {
+  font-size: 100%;
+}
+
+body {
+  background: white;
+  color: #222222;
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  position: relative;
+}
+
+#topnav {
+  background: rgb(255, 136, 0);
+  height: 30px;
+}
+
+#header {
+    width: 50%;
+    float: left;
+}
+
+#logo {
+    height: 24px;
+    margin: 3px;
+    vertical-align: middle;
+}
+
+#linking {
+    width: 50%;
+    float: right;
+    line-height: 150%;
+}

@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Schiedsgerichtstatus</title>
+    <link rel="stylesheet" href="/assets/main.css"/>
+  </head>
+  <body>
+    <div id='topnav'>
+      <a href="/"><img id="logo" src="/assets/logo.png"/></a> Status der Schiedsgerichte
+    </div>
+    <div id='content'>
+      <h1>@Model.Name</h1>
+      <form action="/court/@Model.Id" method="post">
+        <input type="hidden" name="Id" value="@Model.Id"/>
+        <table>
+          <tr>
+            <td>Gesch&auml;ftslast:</td>
+            <td><select name="PendingCases">
+            @Each.PendingCasesOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+        </table>
+
+        <h2>Richter</h2>
+
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Typ</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[0]" value="@Model.Judge1.Id"/>
+            <td><input type="text" name="Name[0]" value="@Model.Judge1.Name"/></td>
+            <td><select name="Type[0]">
+            @Each.Judge1.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[0]">
+            @Each.Judge1.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[1]" value="@Model.Judge2.Id"/>
+            <td><input type="text" name="Name[1]" value="@Model.Judge2.Name"/></td>
+            <td><select name="Type[1]">
+            @Each.Judge2.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[1]">
+            @Each.Judge2.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[2]" value="@Model.Judge3.Id"/>
+            <td><input type="text" name="Name[2]" value="@Model.Judge3.Name"/></td>
+            <td><select name="Type[2]">
+            @Each.Judge3.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[2]">
+            @Each.Judge3.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[3]" value="@Model.Judge4.Id"/>
+            <td><input type="text" name="Name[3]" value="@Model.Judge4.Name"/></td>
+            <td><select name="Type[3]">
+            @Each.Judge4.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[3]">
+            @Each.Judge4.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[4]" value="@Model.Judge5.Id"/>
+            <td><input type="text" name="Name[4]" value="@Model.Judge5.Name"/></td>
+            <td><select name="Type[4]">
+            @Each.Judge5.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[4]">
+            @Each.Judge5.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[5]" value="@Model.Judge6.Id"/>
+            <td><input type="text" name="Name[5]" value="@Model.Judge6.Name"/></td>
+            <td><select name="Type[5]">
+            @Each.Judge6.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[5]">
+            @Each.Judge6.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[6]" value="@Model.Judge7.Id"/>
+            <td><input type="text" name="Name[6]" value="@Model.Judge7.Name"/></td>
+            <td><select name="Type[6]">
+            @Each.Judge7.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[6]">
+            @Each.Judge7.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[7]" value="@Model.Judge8.Id"/>
+            <td><input type="text" name="Name[7]" value="@Model.Judge8.Name"/></td>
+            <td><select name="Type[7]">
+            @Each.Judge8.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[7]">
+            @Each.Judge8.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+          <tr>
+            <input type="hidden" name="Id[8]" value="@Model.Judge9.Id"/>
+            <td><input type="text" name="Name[8]" value="@Model.Judge9.Name"/></td>
+            <td><select name="Type[8]">
+            @Each.Judge9.TypeOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+            <td><select name="Status[8]">
+            @Each.Judge9.StatusOptions
+              <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+            @EndEach
+            </select></td>
+          </tr>
+        </table>
+        <p><input type="submit" value="Aktualisieren"/> <a href="/courts">Abbrechen</a></p>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Schiedsgerichtstatus</title>
+    <link rel="stylesheet" href="/assets/main.css"/>
+  </head>
+  <body>
+    <div id='topnav'>
+    <a href="/"><img id="logo" src="/assets/logo.png"/></a> Status der Schiedsgerichte
+    </div>
+    <div id='content'>
+      <h1>Login</h1>
+      <form action="/login" method="post">
+        <p><input type="password" name="password"/></p>
+        <p><input type="submit" value="Login"/> <a href="/">Abbrechen</a></p>
+     </form>
+    </div>
+  </body>
+</html>

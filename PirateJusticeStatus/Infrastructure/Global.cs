@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
 
 namespace PirateJusticeStatus.Infrastructure
 {
@@ -9,6 +11,31 @@ namespace PirateJusticeStatus.Infrastructure
 		private static UserMapper _users;
 		private static Logger _logger;
 		private static Mailer _mailer;
+        
+		private static IEnumerable<string> ConfigPaths
+		{
+			get
+			{
+				yield return "/Security/PPDE/piratejusticestatus.xml";
+				yield return "/etc/piratejusticestatus.xml";
+			}
+		}
+
+        private static string ConfigPath
+		{
+			get
+			{
+                foreach (var path in ConfigPaths)
+				{
+                    if (File.Exists(path))
+					{
+						return path;
+					}
+				}
+
+				throw new FileNotFoundException();
+			}
+		}
 
 		public static Config Config
 		{
@@ -17,7 +44,7 @@ namespace PirateJusticeStatus.Infrastructure
 				if (_config == null)
 				{
 					_config = new Config();
-					_config.Load("/Security/PPDE/piratejusticestatus.xml");
+					_config.Load(ConfigPath);
 				}
 
 				return _config;

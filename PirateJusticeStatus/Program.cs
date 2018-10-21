@@ -15,8 +15,6 @@ namespace PirateJusticeStatus
     {
         public static void Main(string[] args)
         {
-			Global.Mail.SendAdmin("test", "test!");
-
 			var database = Global.Database;
 			database.BeginTransaction();
             database.CreateTable<Court>();

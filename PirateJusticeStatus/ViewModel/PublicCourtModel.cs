@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using PirateJusticeStatus.Model;
 using System.Linq;
+using PirateJusticeStatus.Model;
+using PirateJusticeStatus.Util;
 
 namespace PirateJusticeStatus.ViewModel
 {
@@ -25,7 +26,7 @@ namespace PirateJusticeStatus.ViewModel
 		public PublicCourtModel(Court court)
         {
 			Id = court.Id;
-			Name = court.Name;
+			Name = court.Name.Sanatize();
             
 			if (court.LastUpdate.AddDays(55) < DateTime.Now)
             {

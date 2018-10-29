@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PirateJusticeStatus.Model;
+using PirateJusticeStatus.Util;
 
 namespace PirateJusticeStatus.ViewModel
 {
@@ -36,7 +37,7 @@ namespace PirateJusticeStatus.ViewModel
 		public JudgeModel(Judge judge)
         {
 			Id = judge.Id;
-			Name = judge.Name;
+			Name = judge.Name.Sanatize();
 
 			Type = judge.Type.ToString();
 			TypeOptions = new List<SelectOption>();
@@ -55,9 +56,9 @@ namespace PirateJusticeStatus.ViewModel
 
 		public void Update(Judge judge)
 		{
-			judge.Name = Name;
-			judge.Type = (JudgeType)Enum.Parse(typeof(JudgeType), Type);
-			judge.Status = (JudgeStatus)Enum.Parse(typeof(JudgeStatus), Status);
+			judge.Name = Name.Sanatize();
+			judge.Type = Type.TryParseEnum(JudgeType.Full);
+			judge.Status = Status.TryParseEnum(JudgeStatus.Available);
 		}
     }
 }

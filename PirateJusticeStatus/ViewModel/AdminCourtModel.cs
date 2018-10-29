@@ -47,13 +47,13 @@ namespace PirateJusticeStatus.ViewModel
 			{
 				JudgeStatus = "<font color=\"darkred\">Unbesetzt</font>";
 			}
-            
 
-            BoardName = court.BoardName;
-			Mail = court.Mail;
-			BoardMail = court.BoardMail;
-			BoardKey = court.BoardKey;
-			CourtKey = court.CourtKey;
+
+			BoardName = court.BoardName.Sanatize();
+			Mail = court.Mail.Sanatize();
+			BoardMail = court.BoardMail.Sanatize();
+			BoardKey = court.BoardKey.Sanatize();
+			CourtKey = court.CourtKey.Sanatize();
 			LastUpdate = court.LastUpdate.Format();
 			LastReminder = court.LastReminder.Format();
 			ReminderLevel = court.ReminderLevel.ToString();
@@ -111,10 +111,10 @@ namespace PirateJusticeStatus.ViewModel
 		public override void Update(Court court, IEnumerable<JudgeModel> judges)
 		{
 			base.Update(court, judges);
-			court.Name = Name;
-			court.BoardName = BoardName;
-			court.Mail = Mail;
-			court.BoardMail = BoardMail;
+			court.Name = Name.Sanatize();
+			court.BoardName = BoardName.Sanatize();
+			court.Mail = Mail.Sanatize();
+			court.BoardMail = BoardMail.Sanatize();
 
 			if (CourtKey.IsNullOrEmpty())
 			{
@@ -122,7 +122,7 @@ namespace PirateJusticeStatus.ViewModel
 			}
 			else
 			{
-				court.CourtKey = CourtKey;
+				court.CourtKey = CourtKey.Sanatize();
 			}
 
 			if (BoardKey.IsNullOrEmpty())
@@ -131,12 +131,12 @@ namespace PirateJusticeStatus.ViewModel
             }
             else
             {
-				court.BoardKey = BoardKey;
+				court.BoardKey = BoardKey.Sanatize();
             }
 
 			court.LastUpdate = LastUpdate.ParseTimestamp();
 			court.LastReminder = LastReminder.ParseTimestamp();
-			court.ReminderLevel = int.Parse(ReminderLevel);
+			court.ReminderLevel = ReminderLevel.TryParseInt(0, 0, 9);
 		}
     }
 }

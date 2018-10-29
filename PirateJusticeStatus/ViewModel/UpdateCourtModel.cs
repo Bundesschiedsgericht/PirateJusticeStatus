@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PirateJusticeStatus.Model;
 using System.Linq;
+using PirateJusticeStatus.Util;
 
 namespace PirateJusticeStatus.ViewModel
 {
@@ -63,7 +64,7 @@ namespace PirateJusticeStatus.ViewModel
 
 		public virtual void Update(Court court, IEnumerable<JudgeModel> judges)
 		{
-			court.CaseLoad = (CaseLoad)Enum.Parse(typeof(CaseLoad), PendingCases);
+			court.CaseLoad = PendingCases.TryParseEnum(CaseLoad.None);
 
 			var realJudges = new List<JudgeModel>(judges.Where(j => j.Name.HasContent()));
 

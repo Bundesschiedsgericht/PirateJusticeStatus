@@ -88,8 +88,9 @@ namespace PirateJusticeStatus.Module
 
 						return Response.AsRedirect("/court/updated");
 					}
-					catch
+					catch (Exception exception)
 					{
+                        Global.Log.Error(exception.ToString());
 						_database.AbortTransaction();
 						throw;
 					}

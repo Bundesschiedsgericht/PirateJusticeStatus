@@ -69,39 +69,39 @@ namespace PirateJusticeStatus.Module
 				string idString = parameters.id;
 				Guid id;
 
-				if (Guid.TryParse(idString, out id))
-				{
-					_database.BeginTransaction();
+                if (Guid.TryParse(idString, out id))
+                {
+                    _database.BeginTransaction();
 
-					try
-					{
-						var currentCourt = _database.Query<Court>(id);
+                    try
+                    {
+                        var currentCourt = _database.Query<Court>(id);
 
-						if (currentCourt == null)
-						{
-							currentCourt = new Court(id);
-							updateCourt.Update(currentCourt, updateJudges);
-							_database.Insert(currentCourt);
-						}
-						else
-						{
-							updateCourt.Update(currentCourt, updateJudges);
-							_database.Update(currentCourt);
-						}
+                        if (currentCourt == null)
+                        {
+                            currentCourt = new Court(id);
+                            updateCourt.Update(currentCourt, updateJudges);
+                            _database.Insert(currentCourt);
+                        }
+                        else
+                        {
+                            updateCourt.Update(currentCourt, updateJudges);
+                            _database.Update(currentCourt);
+                        }
 
-						_database.CommitTransaction();
+                        _database.CommitTransaction();
+                    }
+                    catch
+                    {
+                        _database.AbortTransaction();
+                        throw;
+                    }
 
-						Global.Log.Notice("Update of " + updateCourt.Name + " by admin");
-						Global.Mail.SendAdmin("[PJS] Admin Update", "Update of " + updateCourt.Name + " by admin");
+                    Global.Log.Notice("Update of " + updateCourt.Name + " by admin");
+                    Global.Mail.SendAdmin("[PJS] Admin Update", "Update of " + updateCourt.Name + " by admin");
 
-						return Response.AsRedirect("/admin/courts");
-					}
-					catch
-					{
-						_database.AbortTransaction();
-						throw;
-					}
-				}
+                    return Response.AsRedirect("/admin/courts");
+                }
 				else
 				{
 					Global.Log.Warning("Bad uid at admin update");

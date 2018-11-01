@@ -165,5 +165,10 @@ namespace PirateJusticeStatus.Infrastructure
 
             return entry;
         }
+
+        internal void Verbose(string v, object to)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

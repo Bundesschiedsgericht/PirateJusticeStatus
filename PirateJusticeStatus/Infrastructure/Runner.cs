@@ -89,6 +89,14 @@ namespace PirateJusticeStatus.Infrastructure
 			}
 		}
 
+        private string ApplyTemplate(string text, string link, Court court)
+        {
+            return text
+                .Replace("$$LINK$$", link)
+                .Replace("$$COURT$$", court.Name)
+                .Replace("$$BOARD$$", court.BoardName);
+        }
+
 		private void SendRequest(Court court, bool board, string filename)
 		{
 			var template = ReadTemplate(filename);
@@ -96,10 +104,8 @@ namespace PirateJusticeStatus.Infrastructure
 			var name = board ? court.BoardName : court.Name;
 			var address = board ? court.BoardMail : court.Mail;
 			var link = string.Format("{0}/login/{1}/{2}", Global.Config.WebSiteAddress, court.Id.ToString(), key);
-			var subject = template.Item1;
-			var body = template.Item2
-			                   .Replace("$$LINK$$", link)
-			                   .Replace("$$NAME$$", name);
+            var subject = ApplyTemplate(template.Item1, link, court);
+            var body = ApplyTemplate(template.Item2, link, court);
 
             if (address.IsNullOrEmpty())
 			{
@@ -116,7 +122,7 @@ namespace PirateJusticeStatus.Infrastructure
 			}
 			else
 			{
-				Global.Mail.Send(address, subject, body);
+				Global.Mail.Send(name, address, subject, body);
 				Global.Log.Warning("Requested from " + name + " at level " + court.ReminderLevel);
 				Global.Mail.SendAdmin("[PJS] Requested", "Requested from " + name + " at level " + court.ReminderLevel);
 			}         

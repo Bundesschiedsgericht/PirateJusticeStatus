@@ -1,11 +1,13 @@
-﻿Status eures Landesschiedsgericht
-Hallo LaVo,
+﻿Status des $$COURT$$
+Hallo $$BOARD$$,
 
-leider hat sich eurer Landesschiedsgericht auf die Aufforderung des Bundesschiedsgericht nicht gemeldet.
+leider hat sich das $$COURT$$ auf die Aufforderung des Bundesschiedsgericht nicht gemeldet.
 
 Deshalb werdet ihr gebeten, den Status des Landesschiedsgericht zu aktualisieren.
 
 Dazu bitte auf folgenden Link klicken: $$LINK$$
+
+Diese Information wird vom Bundesschiedsgericht alle 30 Tage erhoben und verwendet, um zu verweisende Verfahren auf die Landesschiedsgerichte zu verteilen.
 
 Beste Grüße
 Ein automatisches System

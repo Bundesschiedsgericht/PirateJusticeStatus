@@ -14,8 +14,10 @@ namespace PirateJusticeStatus.Infrastructure
 		private const string DatabaseUsernameTag = "DatabaseUsername";
 		private const string DatabasePasswordTag = "DatabasePassword";
 		private const string AdminMailAddressTag = "AdminMailAddress";
-		private const string SystemMailAddressTag = "SystemMailAddress";
-		private const string MailServerHostTag = "MailServerHost";
+        private const string AdminMailNameTag = "AdminMailName";
+        private const string SystemMailAddressTag = "SystemMailAddress";
+        private const string SystemMailNameTag = "SystemMailName";
+        private const string MailServerHostTag = "MailServerHost";
 		private const string MailServerPortTag = "MailServerPort";
 		private const string MailAccountNameTag = "MailAccountName";
 		private const string MailAccountPasswordTag = "MailAccountPassword";
@@ -28,8 +30,10 @@ namespace PirateJusticeStatus.Infrastructure
 		public string DatabaseUsername { get; set; }
 		public string DatabasePassword { get; set; }
 		public string AdminMailAddress { get; set; }
-		public string SystemMailAddress { get; set; }
-		public string MailServerHost { get; set; }
+        public string AdminMailName{ get; set; }
+        public string SystemMailAddress { get; set; }
+        public string SystemMailName { get; set; }
+        public string MailServerHost { get; set; }
 		public int MailServerPort { get; set; }
 		public string MailAccountName { get; set; }
 		public string MailAccountPassword { get; set; }
@@ -51,8 +55,10 @@ namespace PirateJusticeStatus.Infrastructure
 			DatabaseUsername = root.Element(DatabaseUsernameTag).Value;
 			DatabasePassword = root.Element(DatabasePasswordTag).Value;
 			AdminMailAddress = root.Element(AdminMailAddressTag).Value;
-			SystemMailAddress = root.Element(SystemMailAddressTag).Value;
-			MailServerHost = root.Element(MailServerHostTag).Value;
+            AdminMailName = root.Element(AdminMailNameTag).Value;
+            SystemMailAddress = root.Element(SystemMailAddressTag).Value;
+            SystemMailName = root.Element(SystemMailNameTag).Value;
+            MailServerHost = root.Element(MailServerHostTag).Value;
 			MailServerPort = int.Parse(root.Element(MailServerPortTag).Value);
 			MailAccountName = root.Element(MailAccountNameTag).Value;
 			MailAccountPassword = root.Element(MailAccountPasswordTag).Value;
@@ -72,8 +78,10 @@ namespace PirateJusticeStatus.Infrastructure
 			root.Add(new XElement(DatabaseUsernameTag, DatabaseUsername));
 			root.Add(new XElement(DatabasePasswordTag, DatabasePassword));
 			root.Add(new XElement(AdminMailAddressTag, AdminMailAddress));
-			root.Add(new XElement(SystemMailAddressTag, SystemMailAddress));
-			root.Add(new XElement(MailServerHostTag, MailServerHost));
+            root.Add(new XElement(AdminMailNameTag, AdminMailName));
+            root.Add(new XElement(SystemMailAddressTag, SystemMailAddress));
+            root.Add(new XElement(SystemMailNameTag, SystemMailName));
+            root.Add(new XElement(MailServerHostTag, MailServerHost));
 			root.Add(new XElement(MailServerPortTag, MailServerPort));
 			root.Add(new XElement(MailAccountNameTag, MailAccountName));
 			root.Add(new XElement(MailAccountPasswordTag, MailAccountPassword));

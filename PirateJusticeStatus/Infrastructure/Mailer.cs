@@ -22,22 +22,22 @@ namespace PirateJusticeStatus.Infrastructure
 
         public void SendError(Exception exception)
         {
-            Send(_config.AdminMailAddress, ErrorSubject, exception.ToString());
+            SendAdmin(ErrorSubject, exception.ToString());
         }
 
         public void SendWarning(string body)
         {
-            Send(_config.AdminMailAddress, WarningSubject, body);
+            SendAdmin(WarningSubject, body);
         }
 
         public void SendAdmin(string subject, string body)
         {
-            Send(_config.AdminMailAddress, subject, body);
+            Send(_config.AdminMailAddress, _config.AdminMailAddress, subject, body);
         }
 
-        public void Send(string to, string subject, string body)
+        public void Send(string toName, string toAddress, string subject, string body)
         {
-            _log.Verbose("Sending message to {0}", to);
+            _log.Verbose("Sending message to {0}", toAddress);
 
             try
             {
@@ -48,17 +48,17 @@ namespace PirateJusticeStatus.Infrastructure
                 _log.Verbose("Connected to mail server {0}:{1}", _config.MailServerHost, _config.MailServerPort);
 
                 var message = new MimeMessage();
-                message.From.Add(InternetAddress.Parse(_config.SystemMailAddress));
-                message.To.Add(InternetAddress.Parse(to));
+                message.From.Add(new MailboxAddress(_config.SystemMailName, _config.SystemMailAddress));
+                message.To.Add(new MailboxAddress(toName, toAddress));
                 message.Subject = subject;
                 message.Body = new TextPart("plain") { Text = body };
                 client.Send(message);
 
-                _log.Info("Message sent to {0}", to);
+                _log.Info("Message sent to {0}", toAddress);
             }
             catch (Exception exception)
             { 
-                _log.Error("Error sending mail to {0}", to);
+                _log.Error("Error sending mail to {0}", toAddress);
                 _log.Error(exception.ToString());
             }
         }

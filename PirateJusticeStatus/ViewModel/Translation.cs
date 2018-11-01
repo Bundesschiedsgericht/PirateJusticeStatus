@@ -10,13 +10,13 @@ namespace PirateJusticeStatus.ViewModel
 			switch (value)
 			{
 				case JudgeStatus.Available:
-					return "Verfügbar";
+					return "Aktiv";
 				case JudgeStatus.OnLeave:
 					return "Beurlaubt";
 				case JudgeStatus.Resigned:
 					return "Zurück- oder Ausgetreten";
 				case JudgeStatus.Unavailable:
-					return "Nicht verfügbar";
+					return "Inaktiv oder unerreichbar";
 				default:
 					throw new InvalidOperationException();
 			}

@@ -31,6 +31,14 @@ namespace PirateJusticeStatus.Infrastructure
                 };
 
 			FormsAuthentication.Enable(pipelines, formsAuthConfiguration);
-		}
-	}
+
+            pipelines.OnError += HandleException;
+        }
+
+        private static Response HandleException(NancyContext context, Exception exception)
+        {
+            Global.Log.Error(exception.ToString());
+            return null;
+        }
+    }
 }

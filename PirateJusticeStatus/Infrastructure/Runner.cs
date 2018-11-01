@@ -37,8 +37,7 @@ namespace PirateJusticeStatus.Infrastructure
 					{
 						court.CourtKey = Rng.Get(16).ToHexString();
 						court.BoardKey = Rng.Get(16).ToHexString();
-						court.LastUpdate = DateTime.Now;
-						court.LastReminder = DateTime.Now.AddSeconds(1);
+						court.LastReminder = DateTime.Now;
 						court.ReminderLevel = 0;
 						SendRequest(court, court.ReminderLevel);
 						_db.Update(court);

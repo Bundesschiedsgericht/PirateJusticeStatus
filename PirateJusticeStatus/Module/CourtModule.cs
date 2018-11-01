@@ -78,6 +78,7 @@ namespace PirateJusticeStatus.Module
 						else
 						{
 							updateCourt.Update(currentCourt, updateJudges);
+                            currentCourt.LastUpdate = DateTime.Now;
 							_database.Update(currentCourt);
 						}
 

@@ -104,6 +104,7 @@
     <Compile Include="Module\PublicModule.cs" />
     <Compile Include="ViewModel\PublicCourtModel.cs" />
     <Compile Include="Util\Sanatizer.cs" />
+    <Compile Include="Infrastructure\ErrorHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

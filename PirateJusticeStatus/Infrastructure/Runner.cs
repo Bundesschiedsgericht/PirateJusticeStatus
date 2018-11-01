@@ -20,7 +20,15 @@ namespace PirateJusticeStatus.Infrastructure
 
 			foreach (var court in courts)
 			{
-				RunCourt(court);
+                try
+                {
+                    RunCourt(court);
+                }
+                catch (Exception exception)
+                {
+                    Global.Log.Error("Runner error at " + court.Name);
+                    Global.Log.Error(exception.ToString());
+                }
 			}
 		}
 
@@ -46,9 +54,10 @@ namespace PirateJusticeStatus.Infrastructure
 					catch
 					{
 						_db.AbortTransaction();
-					}
+                        throw;
+                    }
 				}
-				else if (court.LastReminder.AddDays(3) < DateTime.Now)
+				else if (court.LastReminder.AddDays(5) < DateTime.Now)
 				{
 					// Remind to update
 					_db.BeginTransaction();
@@ -64,6 +73,7 @@ namespace PirateJusticeStatus.Infrastructure
 					catch
 					{
 						_db.AbortTransaction();
+                        throw;
 					}
 				}
 			}

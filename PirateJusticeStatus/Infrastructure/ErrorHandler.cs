@@ -22,6 +22,8 @@ namespace PirateJusticeStatus.Infrastructure
 
         public void Handle(HttpStatusCode statusCode, NancyContext context)
         {
+            Global.Log.Error("Error page called with status code {0}", (int)statusCode);
+
             switch (statusCode)
             {
                 case HttpStatusCode.NotFound:
@@ -72,7 +74,7 @@ namespace PirateJusticeStatus.Infrastructure
                 writer.WriteLine("<h1>" + Title + "</h1>");
                 writer.WriteLine("<p>" + Text + "</p>");
                 writer.WriteLine("</body>");
-                writer.WriteLine("<(html>");
+                writer.WriteLine("</html>");
                 writer.Flush();
             }
         }

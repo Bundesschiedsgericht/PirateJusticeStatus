@@ -272,26 +272,37 @@ namespace PirateJusticeStatus.Infrastructure
 
 		private string ColumnTypeDefinition(Column column)
 		{
-			switch (column.BaseType.FullName)
-			{
-				case "System.Guid":
-					return string.Format("{0} uuid", column.Name);
-				case "System.Int32":
-					return string.Format("{0} integer", column.Name);
-				case "System.String":
-					if (column.Size > 1024)
-					{
-						return string.Format("{0} text", column.Name);
-					}
-					else
-					{ 
-						return string.Format("{0} varchar({1})", column.Name, column.Size);
-					}
-				case "System.DateTime":
-					return string.Format("{0} timestamp", column.Name);
-				default:
-					throw new InvalidOperationException("Data type " + column.BaseType.FullName + " not supported");
-			}
+            if (column.BaseType == typeof(Guid))
+            {
+                return string.Format("{0} uuid NOT NULL", column.Name);
+            }
+            else if (column.BaseType == typeof(Guid?))
+            {
+                return string.Format("{0} uuid", column.Name);
+            }
+            else if (column.BaseType == typeof(int))
+            {
+                return string.Format("{0} integer NOT NULL", column.Name);
+            }
+            else if (column.BaseType == typeof(string))
+            {
+                if (column.Size > 1024)
+                {
+                    return string.Format("{0} text NOT NULL", column.Name);
+                }
+                else
+                {
+                    return string.Format("{0} varchar({1}) NOT NULL", column.Name, column.Size);
+                }
+            }
+            else if (column.BaseType == typeof(DateTime))
+            {
+                return string.Format("{0} timestamp NOT NULL", column.Name);
+            }
+            else
+            {
+                throw new InvalidOperationException("Data type " + column.BaseType.FullName + " not supported");
+            }
 		}
 
 		private string ColumnDefinition(Column column)

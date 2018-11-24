@@ -28,7 +28,7 @@ namespace PirateJusticeStatus.Model
 		public int ReminderLevel { get; set; }
 		public string CourtKey { get; set; }
 		public string BoardKey { get; set; }
-        private Guid _substituteId;
+        private Guid? _substituteId;
         private Court _substitute;
         public Court Substitute
         {
@@ -38,7 +38,7 @@ namespace PirateJusticeStatus.Model
                 _substitute = value;
                 if (value == null)
                 {
-                    _substituteId = Guid.Empty;
+                    _substituteId = null;
                 }
                 else
                 {
@@ -94,22 +94,22 @@ namespace PirateJusticeStatus.Model
 				yield return new Column<int>("reminderlevel", 4, () => ReminderLevel, (v) => ReminderLevel = v);
 				yield return new Column<string>("courtkey", 64, () => CourtKey, (v) => CourtKey = v);
 				yield return new Column<string>("boardkey", 64, () => BoardKey, (v) => BoardKey = v);
-                yield return new Column<Guid, Court>("substituteid", 16, () => _substituteId, (v) => _substituteId = v);
+                yield return new Column<Guid?, Court>("substituteid", 16, () => _substituteId, (v) => _substituteId = v);
             }
 		}
 
         public override void CascadeQuery(IDatabase database)
 		{
-            if (_substituteId.Equals(Guid.Empty))
+            if (_substituteId.HasValue)
             {
-                _substitute = null;
+                _substitute = database.Query<Court>(_substituteId.Value);
             }
             else
             {
-                _substitute = database.Query<Court>(_substituteId);
+                _substitute = null;
             }
 
-			Judges.AddRange(database.Query<Judge>("courtid", Id, j => j.Court.Id));
+            Judges.AddRange(database.Query<Judge>("courtid", Id, j => j.Court.Id));
 			Judges.ForEach(j => j.Court = this);
 		}
 

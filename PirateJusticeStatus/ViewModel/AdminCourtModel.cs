@@ -9,6 +9,8 @@ namespace PirateJusticeStatus.ViewModel
 {
 	public class AdminCourtModel : UpdateCourtModel
     {
+        private const string NullOption = "null";
+
         private IDatabase _db;
         public string UpdateStatus { get; set; }
         public string JudgeStatus { get; set; }
@@ -37,7 +39,7 @@ namespace PirateJusticeStatus.ViewModel
             LastUpdate = Timestamp.Default.Format();
 			LastReminder = Timestamp.Default.Format();
 			ReminderLevel = 0.ToString();
-            Substitute = string.Empty;
+            Substitute = NullOption;
             SubstituteOptions = new List<SelectOption>();
         }
 
@@ -68,9 +70,9 @@ namespace PirateJusticeStatus.ViewModel
 			LastUpdate = court.LastUpdate.Format();
 			LastReminder = court.LastReminder.Format();
 			ReminderLevel = court.ReminderLevel.ToString();
-            Substitute = court.Substitute == null ? Guid.Empty.ToString() : court.Substitute.Id.ToString();
+            Substitute = court.Substitute == null ? NullOption : court.Substitute.Id.ToString();
             SubstituteOptions = new List<SelectOption>();
-            SubstituteOptions.Add(new SelectOption(Guid.Empty.ToString(), "Keine", court.Substitute == null));
+            SubstituteOptions.Add(new SelectOption(NullOption, "Keine", court.Substitute == null));
 
             foreach (var c in db.Query<Court>())
             {
@@ -160,16 +162,23 @@ namespace PirateJusticeStatus.ViewModel
 			court.LastReminder = LastReminder.ParseTimestamp();
 			court.ReminderLevel = ReminderLevel.TryParseInt(0, 0, 9);
 
-            Guid substituteId = Guid.Empty;
-            if (Guid.TryParse(Substitute, out substituteId))
+            if (Substitute == NullOption)
             {
-                if (substituteId.Equals(Guid.Empty))
+                court.Substitute = null;
+            }
+            else
+            {
+                Guid substituteId = Guid.Empty;
+                if (Guid.TryParse(Substitute, out substituteId))
                 {
-                    court.Substitute = null;
-                }
-                else
-                {
-                    court.Substitute = _db.Query<Court>(substituteId);
+                    if (substituteId.Equals(Guid.Empty))
+                    {
+                        court.Substitute = null;
+                    }
+                    else
+                    {
+                        court.Substitute = _db.Query<Court>(substituteId);
+                    }
                 }
             }
 		}

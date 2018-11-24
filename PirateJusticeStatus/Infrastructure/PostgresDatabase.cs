@@ -60,7 +60,12 @@ namespace PirateJusticeStatus.Infrastructure
 			var command = Command("INSERT INTO {0} ({1}) VALUES ({2})", obj.Table, columns, values);
             foreach (var c in obj.Columns)
 			{
-				command.AddParam("@" + c.Name, c.Value);
+                var value = c.Value;
+                if (value == null)
+                {
+                    value = DBNull.Value;
+                }
+				command.AddParam("@" + c.Name, value);
 			}
 			command.ExecuteNonQuery();
 			_cache.Add(obj.Id, obj);
@@ -112,8 +117,15 @@ namespace PirateJusticeStatus.Infrastructure
 
 							foreach (var c in ret.Columns)
 							{
-								c.Value = reader[c.Name];
-							}
+                                if (reader[c.Name] is DBNull)
+                                {
+                                    c.Value = null;
+                                }
+                                else
+                                {
+                                    c.Value = reader[c.Name];
+                                }
+                            }
 
 							_cache.Add(ret.Id, ret);
 							cascade.Enqueue(ret);
@@ -176,8 +188,15 @@ namespace PirateJusticeStatus.Infrastructure
 
 							foreach (var c in ret.Columns)
 							{
-								c.Value = reader[c.Name];
-							}
+                                if (reader[c.Name] is DBNull)
+                                {
+                                    c.Value = null;
+                                }
+                                else
+                                {
+                                    c.Value = reader[c.Name];
+                                }
+                            }
 
 							_cache.Add(ret.Id, ret);
 							cascade.Enqueue(ret);
@@ -223,7 +242,14 @@ namespace PirateJusticeStatus.Infrastructure
 
 					foreach (var c in ret.Columns)
 					{
-						c.Value = reader[c.Name];
+                        if (reader[c.Name] is DBNull)
+                        {
+                            c.Value = null;
+                        }
+                        else
+                        {
+                            c.Value = reader[c.Name];
+                        }
 					}
 
 					_cache.Add(ret.Id, ret);
@@ -255,7 +281,12 @@ namespace PirateJusticeStatus.Infrastructure
 			var command = Command("UPDATE {0} SET {1} WHERE id = @id", obj.Table, columns);
             foreach (var c in obj.Columns)
             {
-                command.AddParam("@" + c.Name, c.Value);
+                var value = c.Value;
+                if (value == null)
+                {
+                    value = DBNull.Value;
+                }
+                command.AddParam("@" + c.Name, value);
             }
             command.ExecuteNonQuery();
 			obj.CascadeUpdate(this);

@@ -34,6 +34,11 @@ namespace PirateJusticeStatus.Infrastructure
 
 		private void RunCourt(Court court)
 		{
+            if (court.Substitute != null)
+            {
+                return;
+            }
+
 			if (court.LastUpdate.AddDays(30) < DateTime.Now)
 			{
 				if (court.LastReminder <= court.LastUpdate)

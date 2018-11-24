@@ -58,6 +58,14 @@
               @EndEach
             </select></td>
           </tr>
+          <tr>
+            <td>Vertretungsgericht</td>
+            <td><select name="Substitute">
+              @Each.SubstituteOptions
+                <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+              @EndEach
+            </select></td>
+          </tr>
         </table>
 
         <h2>Richter</h2>

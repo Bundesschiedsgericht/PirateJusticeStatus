@@ -23,7 +23,7 @@ namespace PirateJusticeStatus.Module
 						return "Key mismatch";
 					case "unknownobject":
 						return "Object not found";
-					default:
+                    default:
 						return "Unknown error";
 				}
             };

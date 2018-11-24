@@ -29,7 +29,7 @@ namespace PirateJusticeStatus.Module
 
 			Get["/admin/courts"] = parameters =>
             {
-				return View["View/admin_courts.sshtml", new PartyModel<AdminCourtModel>(_database.Query<Court>().Select(c => new AdminCourtModel(c)).OrderBy(c => c.Name))];
+                return View["View/admin_courts.sshtml", new PartyModel<AdminCourtModel>(_database.Query<Court>().Select(c => new AdminCourtModel(c, _database)).OrderBy(c => c.Name))];
             };
 
             Get["/admin/court/{id}"] = parameters =>
@@ -48,7 +48,7 @@ namespace PirateJusticeStatus.Module
 					}
 					else
 					{
-						return View["View/admin_court.sshtml", new AdminCourtModel(court)];
+                        return View["View/admin_court.sshtml", new AdminCourtModel(court, _database)];
 					}
 				}
 				else if (idString == "new")

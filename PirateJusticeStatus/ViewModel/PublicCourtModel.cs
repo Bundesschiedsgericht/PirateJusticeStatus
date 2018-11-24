@@ -10,79 +10,106 @@ namespace PirateJusticeStatus.ViewModel
     {
 		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public string UpdateStatus { get; set; }
-		public string JudgeStatus { get; set; }
+		public string Status { get; set; }
 		public string LoadStatus { get; set; }
 
 		public PublicCourtModel()
         {
 			Id = Guid.NewGuid();
 			Name = string.Empty;
-			UpdateStatus = string.Empty;
-			JudgeStatus = string.Empty;
+			Status = string.Empty;
 			LoadStatus = string.Empty;
         }
 
-		public PublicCourtModel(Court court)
+        private string ComputeJudgeStatus(Court court)
+        {
+            int count = 0;
+            foreach (var judge in court.Judges)
+            {
+                switch (judge.Status)
+                {
+                    case Model.JudgeStatus.Available:
+                        count++;
+                        break;
+                }
+            }
+
+            if (court.Name.StartsWith("Bundes", StringComparison.InvariantCulture))
+            {
+                switch (count)
+                {
+                    case 0:
+                        return "Unbesetzt";
+                    case 1:
+                    case 2:
+                        return "Handlungsunfähig";
+                    case 3:
+                    case 4:
+                        return "Minimale Besetzung";
+                    case 5:
+                    case 6:
+                        return "Ausreichende Besetzung";
+                    case 7:
+                    case 8:
+                        return "Gute Besetzung";
+                    case 9:
+                    case 10:
+                        return "Sehr gute Besetzung";
+                    default:
+                        return "Hervorragende Besetzung";
+                }
+            }
+            else
+            {
+                switch (count)
+                {
+                    case 0:
+                        return "Unbesetzt";
+                    case 1:
+                    case 2:
+                        return "Handlungsunfähig";
+                    case 3:
+                        return "Minimale Besetzung";
+                    case 4:
+                        return "Ausreichende Besetzung";
+                    case 5:
+                        return "Gute Besetzung";
+                    case 6:
+                        return "Sehr gute Besetzung";
+                    default:
+                        return "Hervorragende Besetzung";
+                }
+            }
+        }
+
+        public PublicCourtModel(Court court)
         {
 			Id = court.Id;
 			Name = court.Name.Sanatize();
-            
-			if (court.LastUpdate.AddDays(55) < DateTime.Now)
+
+            if (court.Substitute != null)
             {
-				UpdateStatus = "Nachrichtenlos";
+                Status = "Vertreten durch " + court.Substitute.Name;
             }
-			else if (court.LastUpdate.AddDays(45) < DateTime.Now)
+            else if (court.LastUpdate.AddDays(55) < DateTime.Now)
             {
-				UpdateStatus = "Überfällig";
+                Status = "Unbekannt (Keine Rückmeldung)";
             }
-			else if (court.LastUpdate.AddDays(35) < DateTime.Now)
-			{
-				UpdateStatus = "Warten";
-			}
-			else
-			{
-				UpdateStatus = "OK";
-			}
+            else
+            {
+                Status = ComputeJudgeStatus(court);
+
+                if (court.LastUpdate.AddDays(45) < DateTime.Now)
+                {
+                    Status += "(Rückmeldung überfällig)";
+                }
+                else if (court.LastUpdate.AddDays(35) < DateTime.Now)
+                {
+                    Status += "(Rückmeldung erwartet)";
+                }
+            }
 
 			LoadStatus = court.CaseLoad.Translate();
-
-			int count = 0;
-            foreach (var judge in court.Judges)
-			{
-                switch (judge.Status)
-				{
-					case Model.JudgeStatus.Available:
-						count++;
-						break;
-				}
-			}
-
-            switch (count)
-			{
-				case 0:
-					JudgeStatus = "Unbesetzt";
-					break;
-				case 1:
-				case 2:
-					JudgeStatus = "Handlungsunfähig";
-					break;
-				case 3:
-					JudgeStatus = "Minimal";
-					break;
-				case 4:
-					JudgeStatus = "OK";
-                    break;
-				case 5:
-                    JudgeStatus = "Gut";
-                    break;
-				case 6:
-                    JudgeStatus = "Sehr gut";
-                    break;
-				default:
-                    JudgeStatus = "Hervorragend";
-                    break;
-			}
         }
     }
 }

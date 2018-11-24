@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Schiedsgerichtstatus</title>
+    <link rel="stylesheet" href="/assets/main.css"/>
+  </head>
+  <body>
+    <div id='topnav'>
+      <a href="/"><img id="logo" src="/assets/logo.png"/></a> Status der Schiedsgerichte
+    </div>
+    <div id='content'>
+      <h1>@Model.Name</h1>
+      <p>Dieses Schiedsgericht wird gegenwärtig vertreten. Sollte dies nicht mehr der Fall sein, so kontaktiere das <a href="mailto:anrufung@piraten-bsg.de">Bundesschiedsgericht</a>.</p>
+      <p><a href="/courts">Abbrechen</a></p>
+    </div>
+  </body>
+</html>

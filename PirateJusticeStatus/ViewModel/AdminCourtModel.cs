@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using PirateJusticeStatus.Model;
 using System.Linq;
 using PirateJusticeStatus.Util;
+using PirateJusticeStatus.Infrastructure;
 
 namespace PirateJusticeStatus.ViewModel
 {
 	public class AdminCourtModel : UpdateCourtModel
     {
-		public string BoardName { get; set; }
+        private IDatabase _db;
+        public string UpdateStatus { get; set; }
+        public string JudgeStatus { get; set; }
+        public string BoardName { get; set; }
 		public string Mail { get; set; }
 		public string BoardMail { get; set; }
 		public string BoardKey { get; set; }
@@ -16,11 +20,15 @@ namespace PirateJusticeStatus.ViewModel
 		public string LastUpdate { get; set; }
 		public string LastReminder { get; set; }
 		public string ReminderLevel { get; set; }
+        public string Substitute { get; set; }
+        public List<SelectOption> SubstituteOptions { get; set; }
 
-		public AdminCourtModel()
+        public AdminCourtModel()
 			: base()
         {
-			BoardName = string.Empty;
+            UpdateStatus = string.Empty;
+            JudgeStatus = string.Empty;
+            BoardName = string.Empty;
 			Mail = string.Empty;
 			BoardMail = string.Empty;
 			PendingCases = string.Empty;
@@ -29,11 +37,14 @@ namespace PirateJusticeStatus.ViewModel
             LastUpdate = Timestamp.Default.Format();
 			LastReminder = Timestamp.Default.Format();
 			ReminderLevel = 0.ToString();
+            Substitute = string.Empty;
+            SubstituteOptions = new List<SelectOption>();
         }
 
-		public AdminCourtModel(Court court)
+		public AdminCourtModel(Court court, IDatabase db)
 			: base(court)
         {
+            _db = db;
 			UpdateStatus = court.LastUpdate.ToShortDateString();
 
 			if (court.Judges.Count > 0)
@@ -57,6 +68,17 @@ namespace PirateJusticeStatus.ViewModel
 			LastUpdate = court.LastUpdate.Format();
 			LastReminder = court.LastReminder.Format();
 			ReminderLevel = court.ReminderLevel.ToString();
+            Substitute = court.Substitute == null ? Guid.Empty.ToString() : court.Substitute.Id.ToString();
+            SubstituteOptions = new List<SelectOption>();
+            SubstituteOptions.Add(new SelectOption(Guid.Empty.ToString(), "Keine", court.Substitute == null));
+
+            foreach (var c in db.Query<Court>())
+            {
+                if (!c.Id.Equals(court.Id))
+                {
+                    SubstituteOptions.Add(new SelectOption(c.Id.ToString(), c.Name, c.Id.Equals(court.Substitute)));
+                }
+            }
         }
 
         private string JudgeOrdering(Judge judge)
@@ -137,6 +159,19 @@ namespace PirateJusticeStatus.ViewModel
 			court.LastUpdate = LastUpdate.ParseTimestamp();
 			court.LastReminder = LastReminder.ParseTimestamp();
 			court.ReminderLevel = ReminderLevel.TryParseInt(0, 0, 9);
+
+            Guid substituteId = Guid.Empty;
+            if (Guid.TryParse(Substitute, out substituteId))
+            {
+                if (substituteId.Equals(Guid.Empty))
+                {
+                    court.Substitute = null;
+                }
+                else
+                {
+                    court.Substitute = _db.Query<Court>(substituteId);
+                }
+            }
 		}
     }
 }

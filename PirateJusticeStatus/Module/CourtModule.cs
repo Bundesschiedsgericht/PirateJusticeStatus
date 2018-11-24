@@ -37,11 +37,15 @@ namespace PirateJusticeStatus.Module
 
 					var court = _database.Query<Court>(id);
 
-					if (court == null)
-					{
-						Global.Log.Warning("Unknown court at update");
-						return Response.AsRedirect("/error/unknownobject");
-					}
+                    if (court == null)
+                    {
+                        Global.Log.Warning("Unknown court at update");
+                        return Response.AsRedirect("/error/unknownobject");
+                    }
+                    else if (court.Substitute != null)
+                    {
+                        return View["View/substituted_court.sshtml", new PublicCourtModel(court)];
+                    }
 					else
 					{
 						return View["View/update_court.sshtml", new UpdateCourtModel(court)];
@@ -75,8 +79,12 @@ namespace PirateJusticeStatus.Module
 							Global.Log.Warning("Unknown court at update");
 							return Response.AsRedirect("/error/unknownobject");
 						}
-						else
-						{
+                        else if (currentCourt.Substitute != null)
+                        {
+                            return Response.AsRedirect("/court/" + idString);
+                        }
+                        else
+                        {
 							updateCourt.Update(currentCourt, updateJudges);
                             currentCourt.LastUpdate = DateTime.Now;
 							_database.Update(currentCourt);

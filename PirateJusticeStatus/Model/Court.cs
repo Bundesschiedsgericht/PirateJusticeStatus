@@ -28,6 +28,24 @@ namespace PirateJusticeStatus.Model
 		public int ReminderLevel { get; set; }
 		public string CourtKey { get; set; }
 		public string BoardKey { get; set; }
+        private Guid _substituteId;
+        private Court _substitute;
+        public Court Substitute
+        {
+            get { return _substitute; }
+            set
+            {
+                _substitute = value;
+                if (value == null)
+                {
+                    _substituteId = Guid.Empty;
+                }
+                else
+                {
+                    _substituteId = value.Id;
+                }
+            }
+        }
 
 		public Court() : base(Guid.Empty)
 		{
@@ -42,6 +60,7 @@ namespace PirateJusticeStatus.Model
 			ReminderLevel = 0;
 			CourtKey = Rng.Get(16).ToHexString();
 			BoardKey = Rng.Get(16).ToHexString();
+            Substitute = null;
 		}
         
 		public Court(Guid id) : base(id)
@@ -57,6 +76,7 @@ namespace PirateJusticeStatus.Model
 			ReminderLevel = 0;
 			CourtKey = Rng.Get(16).ToHexString();
 			BoardKey = Rng.Get(16).ToHexString();
+            Substitute = null;
         }
 
 		public override IEnumerable<Column> Columns
@@ -74,11 +94,21 @@ namespace PirateJusticeStatus.Model
 				yield return new Column<int>("reminderlevel", 4, () => ReminderLevel, (v) => ReminderLevel = v);
 				yield return new Column<string>("courtkey", 64, () => CourtKey, (v) => CourtKey = v);
 				yield return new Column<string>("boardkey", 64, () => BoardKey, (v) => BoardKey = v);
-			}
+                yield return new Column<Guid, Court>("substituteid", 16, () => _substituteId, (v) => _substituteId = v);
+            }
 		}
 
         public override void CascadeQuery(IDatabase database)
 		{
+            if (_substituteId.Equals(Guid.Empty))
+            {
+                _substitute = null;
+            }
+            else
+            {
+                _substitute = database.Query<Court>(_substituteId);
+            }
+
 			Judges.AddRange(database.Query<Judge>("courtid", Id, j => j.Court.Id));
 			Judges.ForEach(j => j.Court = this);
 		}

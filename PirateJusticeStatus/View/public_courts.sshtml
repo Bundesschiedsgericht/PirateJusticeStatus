@@ -18,15 +18,13 @@
       <table style="width: 100%;">
         <tr>
           <th>Schiedsgericht</th>
-          <th>Rückmeldung</th>
-          <th>Besetzung</th>
+          <th>Status</th>
           <th>Geschäftslast</th>
         </tr>
       @Each.Courts
         <tr>
           <td>@Current.Name</td>
-          <td>@Current.UpdateStatus</td>
-          <td>@Current.JudgeStatus</td>
+          <td>@Current.Status</td>
           <td>@Current.LoadStatus</td>
         </tr>
       @EndEach

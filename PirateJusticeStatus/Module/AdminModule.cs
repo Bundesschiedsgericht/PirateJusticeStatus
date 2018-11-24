@@ -29,7 +29,7 @@ namespace PirateJusticeStatus.Module
 
 			Get["/admin/courts"] = parameters =>
             {
-                return View["View/admin_courts.sshtml", new PartyModel<AdminCourtModel>(_database.Query<Court>().Select(c => new AdminCourtModel(c, _database)).OrderBy(c => c.Name))];
+                return View["View/admin_courts.sshtml", new PartyModel<AdminCourtModel>(_database.Query<Court>().Select(c => new AdminCourtModel(_database, c)).OrderBy(c => c.Name))];
             };
 
             Get["/admin/court/{id}"] = parameters =>
@@ -48,12 +48,12 @@ namespace PirateJusticeStatus.Module
 					}
 					else
 					{
-                        return View["View/admin_court.sshtml", new AdminCourtModel(court, _database)];
+                        return View["View/admin_court.sshtml", new AdminCourtModel(_database, court)];
 					}
 				}
 				else if (idString == "new")
 				{
-					return View["View/admin_court.sshtml", new AdminCourtModel()];
+                    return View["View/admin_court.sshtml", new AdminCourtModel()];
 				}
 				else
 				{
@@ -80,12 +80,12 @@ namespace PirateJusticeStatus.Module
                         if (currentCourt == null)
                         {
                             currentCourt = new Court(id);
-                            updateCourt.Update(currentCourt, updateJudges);
+                            updateCourt.Update(_database, currentCourt, updateJudges);
                             _database.Insert(currentCourt);
                         }
                         else
                         {
-                            updateCourt.Update(currentCourt, updateJudges);
+                            updateCourt.Update(_database, currentCourt, updateJudges);
                             _database.Update(currentCourt);
                         }
 

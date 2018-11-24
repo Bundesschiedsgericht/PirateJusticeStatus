@@ -43,10 +43,9 @@ namespace PirateJusticeStatus.ViewModel
             SubstituteOptions = new List<SelectOption>();
         }
 
-		public AdminCourtModel(Court court, IDatabase db)
-			: base(court)
+		public AdminCourtModel(IDatabase db, Court court)
+			: base(db, court)
         {
-            _db = db;
 			UpdateStatus = court.LastUpdate.ToShortDateString();
 
 			if (court.Judges.Count > 0)
@@ -132,9 +131,9 @@ namespace PirateJusticeStatus.ViewModel
             }
 		}
 
-		public override void Update(Court court, IEnumerable<JudgeModel> judges)
+		public override void Update(IDatabase db, Court court, IEnumerable<JudgeModel> judges)
 		{
-			base.Update(court, judges);
+			base.Update(db, court, judges);
 			court.Name = Name.Sanatize();
 			court.BoardName = BoardName.Sanatize();
 			court.Mail = Mail.Sanatize();
@@ -177,7 +176,7 @@ namespace PirateJusticeStatus.ViewModel
                     }
                     else
                     {
-                        court.Substitute = _db.Query<Court>(substituteId);
+                        court.Substitute = db.Query<Court>(substituteId);
                     }
                 }
             }

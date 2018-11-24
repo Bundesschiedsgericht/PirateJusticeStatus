@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PirateJusticeStatus.Model;
 using System.Linq;
 using PirateJusticeStatus.Util;
+using PirateJusticeStatus.Infrastructure;
 
 namespace PirateJusticeStatus.ViewModel
 {
@@ -41,7 +42,7 @@ namespace PirateJusticeStatus.ViewModel
 			Judge9 = new JudgeModel();
         }
 
-		public UpdateCourtModel(Court court)
+		public UpdateCourtModel(IDatabase db, Court court)
 			: base(court)
         {
             PendingCases = court.CaseLoad.ToString();
@@ -62,7 +63,7 @@ namespace PirateJusticeStatus.ViewModel
 			Judge9 = court.Judges.Count >= 9 ? new JudgeModel(court.Judges.Skip(8).First()) : new JudgeModel();
         }
 
-		public virtual void Update(Court court, IEnumerable<JudgeModel> judges)
+		public virtual void Update(IDatabase db, Court court, IEnumerable<JudgeModel> judges)
 		{
 			court.CaseLoad = PendingCases.TryParseEnum(CaseLoad.None);
 

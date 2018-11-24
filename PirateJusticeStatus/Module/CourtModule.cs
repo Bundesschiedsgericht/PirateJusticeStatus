@@ -23,7 +23,7 @@ namespace PirateJusticeStatus.Module
 
 			Get["/courts"] = parameters =>
             {
-				return View["View/update_courts.sshtml", new PartyModel<UpdateCourtModel>(_database.Query<Court>().Select(c => new UpdateCourtModel(c)).OrderBy(c => c.Name))];
+				return View["View/update_courts.sshtml", new PartyModel<UpdateCourtModel>(_database.Query<Court>().Select(c => new UpdateCourtModel(_database, c)).OrderBy(c => c.Name))];
             };
 
             Get["/court/{id}"] = parameters =>
@@ -48,7 +48,7 @@ namespace PirateJusticeStatus.Module
                     }
 					else
 					{
-						return View["View/update_court.sshtml", new UpdateCourtModel(court)];
+						return View["View/update_court.sshtml", new UpdateCourtModel(_database, court)];
 					}
 				}
 				else
@@ -85,7 +85,7 @@ namespace PirateJusticeStatus.Module
                         }
                         else
                         {
-							updateCourt.Update(currentCourt, updateJudges);
+							updateCourt.Update(_database, currentCourt, updateJudges);
                             currentCourt.LastUpdate = DateTime.Now;
 							_database.Update(currentCourt);
 						}

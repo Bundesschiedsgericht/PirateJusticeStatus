@@ -101,11 +101,11 @@ namespace PirateJusticeStatus.ViewModel
 
                 if (court.LastUpdate.AddDays(45) < DateTime.Now)
                 {
-                    Status += "(Rückmeldung überfällig)";
+                    Status += " (Rückmeldung überfällig)";
                 }
                 else if (court.LastUpdate.AddDays(35) < DateTime.Now)
                 {
-                    Status += "(Rückmeldung erwartet)";
+                    Status += " (Rückmeldung erwartet)";
                 }
             }
 

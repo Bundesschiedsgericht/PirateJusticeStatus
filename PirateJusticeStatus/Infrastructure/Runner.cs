@@ -96,8 +96,7 @@ namespace PirateJusticeStatus.Infrastructure
 				case 3:
 					SendRequest(court, false, "reminder.txt");
 					break;
-				case 4:
-				case 5:
+                default:
 					SendRequest(court, true, "board.txt");
 					break;
 			}

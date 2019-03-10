@@ -9,6 +9,10 @@ Dazu bitte auf folgenden Link klicken: $$LINK$$
 
 Diese Information wird vom Bundesschiedsgericht alle 30 Tage erhoben und verwendet, um zu verweisende Verfahren auf die Landesschiedsgerichte zu verteilen.
 
+Falls ihr diese Anfrage erhaltet, obschon euer Landesschiedsgericht besetzt ist, kann es sein, dass die Funktionsadresse $$MAIL$$ falsch ist oder nicht bei den Richtern ankommt. Sollte dies der Fall sein, so bitten wir das zu korrigieren und ggfs. die neue Funktionsadresse des Landesschiedsgerichts im Wiki zu publizieren und an anrufung@bsg.piratenpartei.de mitzuteilen.
+
+Falls euer Landesschiedsgericht unbesetzt oder handlungsunfähig ist und sich dies nicht bald ändern wird, bitten wir darum, beim Bundesschiedsgericht (anrufung@bsg.piratenpartei.de) einen Antrag auf Vertretung des Landesschiedsgerichts durch ein anderes Landesschiedsgerichts gemäß § 6 Abs. 6 der Schiedsgerichtsordnung zu stellen.
+
 Beste Grüße
 Ein automatisches System
 des Bundesschiedsgerichts

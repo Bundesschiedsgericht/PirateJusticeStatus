@@ -86,52 +86,75 @@ namespace PirateJusticeStatus.Infrastructure
 
 		private void SendRequest(Court court, int level)
 		{
-			switch (level)
-			{
-				case 0:
-					SendRequest(court, false, "request.txt");
-					break;
-				case 1:
-				case 2:
-				case 3:
-					SendRequest(court, false, "reminder.txt");
-					break;
-                default:
-					SendRequest(court, true, "board.txt");
-					break;
-			}
+            if (string.IsNullOrEmpty(court.Mail))
+            {
+                SendRequestBoard(court, "missing.txt");
+            }
+            else
+            {
+                switch (level)
+                {
+                    case 0:
+                        SendRequestCourt(court, "request.txt");
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                        SendRequestCourt(court, "reminder.txt");
+                        break;
+                    default:
+                        SendRequestBoard(court, "board.txt");
+                        break;
+                }
+            }
 		}
 
         private string ApplyTemplate(string text, string link, Court court)
         {
             return text
                 .Replace("$$LINK$$", link)
+                .Replace("$$MAIL$$", court.Mail)
                 .Replace("$$COURT$$", court.Name)
                 .Replace("$$BOARD$$", court.BoardName);
         }
 
-		private void SendRequest(Court court, bool board, string filename)
+        private void SendRequestBoard(Court court, string filename)
+        {
+            var template = ReadTemplate(filename);
+            var key = court.BoardKey;
+            var name = court.BoardName;
+            var address = court.BoardMail;
+            var link = string.Format("{0}/login/{1}/{2}", Global.Config.WebSiteAddress, court.Id.ToString(), key);
+            var subject = ApplyTemplate(template.Item1, link, court);
+            var body = ApplyTemplate(template.Item2, link, court);
+
+            if (address.IsNullOrEmpty())
+            {
+                Global.Log.Warning("No mail address for " + court.BoardName);
+                Global.Mail.SendAdmin("[PJS] Missing address", "No mail address for " + court.BoardName);
+            }
+            else
+            {
+                Global.Mail.Send(name, address, subject, body);
+                Global.Log.Warning("Requested from " + name + " at level " + court.ReminderLevel);
+                Global.Mail.SendAdmin("[PJS] Requested", "Requested from " + name + " at level " + court.ReminderLevel);
+            }
+        }
+
+        private void SendRequestCourt(Court court, string filename)
 		{
 			var template = ReadTemplate(filename);
-			var key = board ? court.BoardKey : court.CourtKey;
-			var name = board ? court.BoardName : court.Name;
-			var address = board ? court.BoardMail : court.Mail;
+			var key = court.CourtKey;
+			var name = court.Name;
+			var address = court.Mail;
 			var link = string.Format("{0}/login/{1}/{2}", Global.Config.WebSiteAddress, court.Id.ToString(), key);
             var subject = ApplyTemplate(template.Item1, link, court);
             var body = ApplyTemplate(template.Item2, link, court);
 
             if (address.IsNullOrEmpty())
 			{
-				if (board)
-				{
-					Global.Log.Warning("No mail address for " + court.BoardName);
-					Global.Mail.SendAdmin("[PJS] Missing address", "No mail address for " + court.BoardName);
-				}
-				else
-				{
-					Global.Log.Warning("No mail address for " + court.Name);
-					Global.Mail.SendAdmin("[PJS] Missing address", "No mail address for " + court.Name);
-				}
+			    Global.Log.Warning("No mail address for " + court.Name);
+				Global.Mail.SendAdmin("[PJS] Missing address", "No mail address for " + court.Name);
 			}
 			else
 			{

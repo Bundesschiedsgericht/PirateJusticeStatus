@@ -64,7 +64,7 @@ namespace PirateJusticeStatus.Model
                     case ReminderMode.Standard:
                         return 30;
                     case ReminderMode.Infrequent:
-                        return 90;
+                        return 180;
                     case ReminderMode.Off:
                         return 3650;
                     default:
@@ -82,7 +82,7 @@ namespace PirateJusticeStatus.Model
                     case ReminderMode.Standard:
                         return 5;
                     case ReminderMode.Infrequent:
-                        return 5;
+                        return 7;
                     case ReminderMode.Off:
                         return 3650;
                     default:

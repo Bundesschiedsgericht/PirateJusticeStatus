@@ -77,7 +77,7 @@ namespace PirateJusticeStatus.ViewModel
             ReminderModeOptions = new List<SelectOption>();
             foreach (ReminderMode reminderMode in Enum.GetValues(typeof(ReminderMode)))
             {
-                ReminderModeOptions.Add(new SelectOption(reminderMode.ToString(), reminderMode.Translate().ConvertToHtml(), false));
+                ReminderModeOptions.Add(new SelectOption(reminderMode.ToString(), reminderMode.Translate().ConvertToHtml(), reminderMode == court.ReminderMode));
             }
 
             BoardKey = court.BoardKey.Sanatize();

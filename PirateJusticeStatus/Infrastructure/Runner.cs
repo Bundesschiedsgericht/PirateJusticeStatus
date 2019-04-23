@@ -32,14 +32,14 @@ namespace PirateJusticeStatus.Infrastructure
 			}
 		}
 
-		private void RunCourt(Court court)
+        private void RunCourt(Court court)
 		{
             if (court.Substitute != null)
             {
                 return;
             }
 
-			if (court.LastUpdate.AddDays(30) < DateTime.Now)
+            if (court.LastUpdate.AddDays(court.AskPeriodDays) < DateTime.Now)
 			{
 				if (court.LastReminder <= court.LastUpdate)
 				{
@@ -62,7 +62,7 @@ namespace PirateJusticeStatus.Infrastructure
                         throw;
                     }
 				}
-				else if (court.LastReminder.AddDays(5) < DateTime.Now)
+				else if (court.LastReminder.AddDays(court.ReminderPeriodDays) < DateTime.Now)
 				{
 					// Remind to update
 					_db.BeginTransaction();

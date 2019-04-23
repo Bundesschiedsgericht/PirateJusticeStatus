@@ -55,6 +55,42 @@ namespace PirateJusticeStatus.Model
             }
         }
 
+        public int AskPeriodDays
+        {
+            get
+            {
+                switch (ReminderMode)
+                {
+                    case ReminderMode.Standard:
+                        return 30;
+                    case ReminderMode.Infrequent:
+                        return 90;
+                    case ReminderMode.Off:
+                        return 3650;
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+        }
+
+        public int ReminderPeriodDays
+        {
+            get
+            {
+                switch (ReminderMode)
+                {
+                    case ReminderMode.Standard:
+                        return 5;
+                    case ReminderMode.Infrequent:
+                        return 5;
+                    case ReminderMode.Off:
+                        return 3650;
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+        }
+
         public Court() : base(Guid.Empty)
         {
             Name = string.Empty;

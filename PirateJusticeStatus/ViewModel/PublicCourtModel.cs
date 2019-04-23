@@ -91,7 +91,7 @@ namespace PirateJusticeStatus.ViewModel
             {
                 Status = "Vertreten durch " + court.Substitute.Name;
             }
-            else if (court.LastUpdate.AddDays(55) < DateTime.Now)
+            else if (court.LastUpdate.AddDays(court.AskPeriodDays + (court.ReminderPeriodDays * 5)) < DateTime.Now)
             {
                 Status = "Unbekannt (Keine Rückmeldung)";
             }
@@ -99,11 +99,11 @@ namespace PirateJusticeStatus.ViewModel
             {
                 Status = ComputeJudgeStatus(court);
 
-                if (court.LastUpdate.AddDays(45) < DateTime.Now)
+                if (court.LastUpdate.AddDays(court.AskPeriodDays + (court.ReminderPeriodDays * 3)) < DateTime.Now)
                 {
                     Status += " (Rückmeldung überfällig)";
                 }
-                else if (court.LastUpdate.AddDays(35) < DateTime.Now)
+                else if (court.LastUpdate.AddDays(court.AskPeriodDays + court.ReminderPeriodDays) < DateTime.Now)
                 {
                     Status += " (Rückmeldung erwartet)";
                 }

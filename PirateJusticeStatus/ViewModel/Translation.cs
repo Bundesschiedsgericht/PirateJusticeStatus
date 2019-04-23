@@ -5,7 +5,22 @@ namespace PirateJusticeStatus.ViewModel
 {
     public static class Translation
     {
-		public static string Translate(this JudgeStatus value)
+        public static string Translate(this ReminderMode value)
+        {
+            switch (value)
+            {
+                case ReminderMode.Standard:
+                    return "Standard";
+                case ReminderMode.Infrequent:
+                    return "Reduziert";
+                case ReminderMode.Off:
+                    return "Aus";
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        public static string Translate(this JudgeStatus value)
 		{
 			switch (value)
 			{

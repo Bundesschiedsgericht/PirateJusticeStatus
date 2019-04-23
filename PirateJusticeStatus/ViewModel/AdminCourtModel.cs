@@ -11,12 +11,13 @@ namespace PirateJusticeStatus.ViewModel
     {
         private const string NullOption = "null";
 
-        private IDatabase _db;
         public string UpdateStatus { get; set; }
         public string JudgeStatus { get; set; }
         public string BoardName { get; set; }
 		public string Mail { get; set; }
-		public string BoardMail { get; set; }
+        public string ReminderMode { get; set; }
+        public List<SelectOption> ReminderModeOptions { get; set; }
+        public string BoardMail { get; set; }
 		public string BoardKey { get; set; }
 		public string CourtKey { get; set; }
 		public string LastUpdate { get; set; }
@@ -33,7 +34,15 @@ namespace PirateJusticeStatus.ViewModel
             BoardName = string.Empty;
 			Mail = string.Empty;
 			BoardMail = string.Empty;
-			PendingCases = string.Empty;
+
+            ReminderMode = string.Empty;
+            ReminderModeOptions = new List<SelectOption>();
+            foreach (ReminderMode reminderMode in Enum.GetValues(typeof(ReminderMode)))
+            {
+                ReminderModeOptions.Add(new SelectOption(reminderMode.ToString(), reminderMode.Translate().ConvertToHtml(), false));
+            }
+
+            PendingCases = string.Empty;
 			CourtKey = string.Empty;
 			BoardKey = string.Empty;
             LastUpdate = Timestamp.Default.Format();
@@ -60,11 +69,18 @@ namespace PirateJusticeStatus.ViewModel
 				JudgeStatus = "<font color=\"darkred\">Unbesetzt</font>";
 			}
 
-
 			BoardName = court.BoardName.Sanatize();
 			Mail = court.Mail.Sanatize();
 			BoardMail = court.BoardMail.Sanatize();
-			BoardKey = court.BoardKey.Sanatize();
+
+            ReminderMode = court.ReminderMode.ToString();
+            ReminderModeOptions = new List<SelectOption>();
+            foreach (ReminderMode reminderMode in Enum.GetValues(typeof(ReminderMode)))
+            {
+                ReminderModeOptions.Add(new SelectOption(reminderMode.ToString(), reminderMode.Translate().ConvertToHtml(), false));
+            }
+
+            BoardKey = court.BoardKey.Sanatize();
 			CourtKey = court.CourtKey.Sanatize();
 			LastUpdate = court.LastUpdate.Format();
 			LastReminder = court.LastReminder.Format();
@@ -138,8 +154,9 @@ namespace PirateJusticeStatus.ViewModel
 			court.BoardName = BoardName.Sanatize();
 			court.Mail = Mail.Sanatize();
 			court.BoardMail = BoardMail.Sanatize();
+            court.ReminderMode = ReminderMode.TryParseEnum(Model.ReminderMode.Standard);
 
-			if (CourtKey.IsNullOrEmpty())
+            if (CourtKey.IsNullOrEmpty())
 			{
 				court.CourtKey = Rng.Get(16).ToHexString();
 			}

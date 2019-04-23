@@ -35,6 +35,14 @@
             <td><input type="text" name="BoardMail" value="@Model.BoardMail"/></td>
           </tr>
           <tr>
+            <td>Erinnerung:</td>
+            <td><select name="ReminderMode">
+              @Each.ReminderModeOptions
+                <option value="@Current.Value" @If.Selected selected @EndIf>@Current.Text</option>
+              @EndEach
+            </select></td>
+          </tr>
+          <tr>
             <td>Schl&uuml;ssel Vorstand:</td>
             <td><input type="text" name="BoardKey" value="@Model.BoardKey"/></td>
           </tr>
